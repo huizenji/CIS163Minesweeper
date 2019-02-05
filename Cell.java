@@ -4,6 +4,8 @@ package W19Project2GIVETOSTUDENTS;
 public class Cell {
     private boolean isExposed;
     private boolean isMine;
+    private boolean isFlagged;
+    private int mineCount;
 
     public Cell(boolean exposed, boolean mine) {
         isExposed = exposed;
