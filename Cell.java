@@ -1,15 +1,24 @@
-package W19Project2GIVETOSTUDENTS;
+package project2;
 
 
 public class Cell {
+    private int mineCount;
+    private boolean isFlagged;
     private boolean isExposed;
     private boolean isMine;
-    private boolean isFlagged;
-    private int mineCount;
 
-    public Cell(boolean exposed, boolean mine) {
+    public Cell(boolean exposed, boolean mine, boolean flagged) {
         isExposed = exposed;
         isMine = mine;
+        isFlagged = flagged;
+    }
+
+    public boolean isFlagged() {
+        return isFlagged;
+    }
+
+    public void setFlagged(boolean flagged) {
+        isFlagged = flagged;
     }
 
     public boolean isExposed() {
