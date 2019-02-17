@@ -9,18 +9,19 @@ public class MineSweeperGame {
 	private int totalMineCount = 10;
 
 	public MineSweeperGame() {
-		status = GameStatus.NotOverYet;
-		board = new Cell[10][10];
-		setEmpty();
-		layMines (7);
-		
-	}
+        status = GameStatus.NotOverYet;
+        boardSize = Integer.parseInt(MineSweeperGUI.boardSizeStr);
+        board = new Cell[boardSize][boardSize];
+        setEmpty();
+        layMines(7);
 
-	private void setEmpty() {
-		for (int r = 0; r < 10; r++)
-			for (int c = 0; c < 10; c++)
-				board[r][c] = new Cell(false, false, false);  // totally clear.
-	}
+    }
+
+    private void setEmpty() {
+        for (int r = 0; r < boardSize; r++)
+            for (int c = 0; c < boardSize; c++)
+                board[r][c] = new Cell(false, false, false);  // totally clear.
+    }
 
 	public Cell getCell(int row, int col) {
 		return board[row][col];
