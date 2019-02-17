@@ -7,6 +7,7 @@ public class MineSweeperGame {
 	private Cell[][] board;
 	private GameStatus status;
 	private int totalMineCount = 10;
+	private int boardSize;
 
 	public MineSweeperGame() {
         status = GameStatus.NotOverYet;
