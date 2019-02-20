@@ -65,137 +65,38 @@ public class MineSweeperGame {
 		}
 	}
 
-    private boolean isNotBorder(int row, int col) {
-        return (row > 0 && row < board.length - 1 && col > 0 && col < board[row].length - 1);
-    }
-
-    private boolean isLeftBorder(int row, int col) {
-        return (row > 0 && row < board.length - 1 && col == 0);
-    }
-
-   private boolean isRightBorder(int row, int col) {
-        return (row > 0 && row < board.length - 1 && col == board[row].length - 1);
-    }
-
-   private boolean isTopBorder(int row, int col) {
-        return (row == 0 && col > 0 && col < board[row].length - 1);
-    }
-
-  private boolean isBottomBorder(int row, int col) {
-        return (row == board.length - 1 && col > 0 && col < board[row].length - 1);
-    }
-
-    private boolean isTopLeftCorner(int row, int col) {
-        return (row == 0 && col == 0);
-    }
-
-    private boolean isTopRightCorner(int row, int col) {
-        return (row == 0 && col == board[row].length - 1);
-    }
-
-    private boolean isBottomLeftCorner(int row, int col) {
-        return (row == board.length - 1 && col == 0);
-    }
-
-    private boolean isBottomRightCorner(int row, int col) {
-        return (row == board.length - 1 && col == board[row].length - 1);
-    }
-
     /******************************************************************
      * This method counts the number of mines directly surrounding the
      * indicated cell while making sure no outOfBounds exceptions are
      * thrown
      * @param row the indicated row of the board array
      * @param col the indicated column of the board array
-     * @return the count of mines directly surrounding the indicated cell
+     * @return the count of mines directly surrounding the indicated
+     *          cell
      *****************************************************************/
     public int neighborCount(int row, int col) {
         int count = 0;
         if (!board[row][col].isMine()) {
-            if (isNotBorder(row, col)) {
-                for (int scannedRow = row + 1; scannedRow >= row - 1;
-                     scannedRow--) {
-                    for (int scannedCol = col - 1; scannedCol <=
-                            col + 1; scannedCol++) {
+            for (int scannedRow = row - 1; scannedRow >= row + 1;
+                 scannedRow--) {
+                for (int scannedCol = col - 1; scannedCol <=
+                        col + 1; scannedCol++) {
+                    if ((row > 0 || row < board.length) && (col > 0 || col < board[row].length))
                         if (board[scannedRow][scannedCol].isMine())
                             count++;
-                    }
-                }
-            }else if (isLeftBorder(row, col)) {
-                for (int scannedRow = row + 1; scannedRow >= row - 1;
-                     scannedRow--) {
-                    for (int scannedCol = col; scannedCol <=
-                            col + 1; scannedCol++) {
-                        if (board[scannedRow][scannedCol].isMine())
-                            count++;
-                    }
-                }
-            }else if (isRightBorder(row, col)) {
-                for (int scannedRow = row + 1; scannedRow >= row - 1;
-                     scannedRow--) {
-                    for (int scannedCol = col - 1; scannedCol <=
-                            col; scannedCol++) {
-                        if (board[scannedRow][scannedCol].isMine())
-                            count++;
-                    }
-                }
-            }else if (isTopBorder(row, col)) {
-                for (int scannedRow = row; scannedRow >= row - 1;
-                     scannedRow--) {
-                    for (int scannedCol = col - 1; scannedCol <=
-                            col; scannedCol++) {
-                        if (board[scannedRow][scannedCol].isMine())
-                            count++;
-                    }
-                }
-            }else if (isBottomBorder(row, col)) {
-                for (int scannedRow = row + 1; scannedRow >= row;
-                     scannedRow--) {
-                    for (int scannedCol = col - 1; scannedCol <=
-                            col; scannedCol++) {
-                        if (board[scannedRow][scannedCol].isMine())
-                            count++;
-                    }
-                }
-            }else if (isTopLeftCorner(row, col)) {
-                for (int scannedRow = row; scannedRow >= row - 1;
-                     scannedRow--) {
-                    for (int scannedCol = col; scannedCol <=
-                            col + 1; scannedCol++) {
-                        if (board[scannedRow][scannedCol].isMine())
-                            count++;
-                    }
-                }
-            }else if (isTopRightCorner(row, col)) {
-                for (int scannedRow = row; scannedRow >= row - 1;
-                     scannedRow--) {
-                    for (int scannedCol = col - 1; scannedCol <=
-                            col; scannedCol++) {
-                        if (board[scannedRow][scannedCol].isMine())
-                            count++;
-                    }
-                }
-            }else if (isBottomLeftCorner(row, col)) {
-                for (int scannedRow = row - 1; scannedRow >= row;
-                     scannedRow--) {
-                    for (int scannedCol = col; scannedCol <=
-                            col + 1; scannedCol++) {
-                        if (board[scannedRow][scannedCol].isMine())
-                            count++;
-                    }
-                }
-            }else if (isBottomRightCorner(row, col)) {
-                for (int scannedRow = row - 1; scannedRow >= row;
-                     scannedRow--) {
-                    for (int scannedCol = col - 1; scannedCol <=
-                            col; scannedCol++) {
-                        if (board[scannedRow][scannedCol].isMine())
-                            count++;
-                    }
                 }
             }
         }
         return count;
+    }
+
+    public void countMineNeighborsOfAllCells() {
+        for (int r = 0; r < boardSize; r++) {
+            for (int c = 0; c < boardSize; c++) {
+                if (!board[r][c].isMine())
+                    board[r][c].setMineCount(neighborCount(r, c));
+            }
+        }
     }
 	
 }
