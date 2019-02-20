@@ -13,6 +13,14 @@ public class Cell {
         isFlagged = flagged;
     }
 
+    public int getMineCount() {
+        return mineCount;
+    }
+
+    public void setMineCount(int mineCount) {
+        this.mineCount = mineCount;
+    }
+    
     public boolean isFlagged() {
         return isFlagged;
     }
