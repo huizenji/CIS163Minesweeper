@@ -18,6 +18,7 @@ public class MineSweeperGame {
         board = new Cell[boardSize][boardSize];
         setEmpty();
         layMines(totalMineCount);
+        countMineNeighborsOfAllCells();
     }
 
     public int getBoardSize() {
