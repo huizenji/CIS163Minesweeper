@@ -26,7 +26,7 @@ public class MineSweeperPanel extends JPanel {
 		game = new MineSweeperGame();
 
 		// create the board
-		boardSize = Integer.parseInt(MineSweeperGUI.boardSizeStr);
+		boardSize = MineSweeperGame.getBoardSize();
 		center.setLayout(new GridLayout(boardSize, boardSize));
 		board = new JButton[boardSize][boardSize];
 
