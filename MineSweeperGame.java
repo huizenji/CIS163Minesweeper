@@ -81,7 +81,7 @@ public class MineSweeperGame {
     public void reset() {
         status = GameStatus.NotOverYet;
         setEmpty();
-        layMines(10);
+        layMines(totalMineCount);
     }
 
     private void layMines(int mineCount) {
