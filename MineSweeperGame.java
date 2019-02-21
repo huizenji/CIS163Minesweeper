@@ -1,21 +1,50 @@
 package project2;
 
-
+import javax.swing.*;
 import java.util.Random;
 
 public class MineSweeperGame {
-	private Cell[][] board;
-	private GameStatus status;
-	private int totalMineCount = 10;
-	private int boardSize;
+    private Cell[][] board;
+    private GameStatus status;
+    private static int totalMineCount;
+    private static String totalMineCountStr = "";
+    private static int boardSize;
+    private static String boardSizeStr = "";
 
-	public MineSweeperGame() {
+    public MineSweeperGame() {
         status = GameStatus.NotOverYet;
-        boardSize = Integer.parseInt(MineSweeperGUI.boardSizeStr);
+        boardSize = 10;
+        totalMineCount = 10;
         board = new Cell[boardSize][boardSize];
         setEmpty();
-        layMines(7);
+        layMines(totalMineCount);
 
+    }
+
+    public static int getBoardSize() {
+        return boardSize;
+    }
+
+    public static void promptBoardSize() {
+        do {
+            if (boardSizeStr.length() > 0) {
+                JOptionPane.showMessageDialog(null, "Please choose a" +
+                        " number between 3 and 30", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+            boardSizeStr = JOptionPane.showInputDialog(null, "Enter " +
+                    "in the size of the board (3-30): ");
+        } while (boardSizeStr.equals("") ||
+                Integer.parseInt(boardSizeStr) < 3 || Integer.parseInt(boardSizeStr) > 30);
+
+        boardSize = Integer.parseInt(boardSizeStr);
+    }
+
+    public static void promptNumberOfMines() {
+        totalMineCountStr = JOptionPane.showInputDialog(null, "Enter in " +
+                "the desired number of mines (default is 10): ");
+        if (Integer.parseInt(totalMineCountStr) >= 1 &&
+                Integer.parseInt(totalMineCountStr) < Integer.parseInt(boardSizeStr))
+            totalMineCount = Integer.parseInt(totalMineCountStr);
     }
 
     private void setEmpty() {
