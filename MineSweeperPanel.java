@@ -88,9 +88,13 @@ public class MineSweeperPanel extends JPanel {
 
 		public void actionPerformed(ActionEvent e) {
 
-			if (e.getSource() == quitButton) {
-              			System.exit(0);
-         		}
+       		        if (e.getSource() == quitButton) {
+       		            int confirm = JOptionPane.showConfirmDialog(null,
+         	     	            "Quit Game?","QUIT",JOptionPane.YES_NO_OPTION);
+         	     	    if(confirm == JOptionPane.YES_OPTION) {
+                   		     System.exit(0);
+               	      	    }
+         	 	 }
 			
 			for (int r = 0; r < boardSize; r++)
 				for (int c = 0; c < boardSize; c++)
