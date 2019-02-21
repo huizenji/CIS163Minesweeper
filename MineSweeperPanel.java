@@ -20,6 +20,8 @@ public class MineSweeperPanel extends JPanel {
 
 		JPanel bottom = new JPanel();
 		JPanel center = new JPanel();
+		JButton quitButton = new JButton("QUIT");
+     	        quitButton.addActionListener(new ButtonListener());
 
 		// create game, listeners
 		ButtonListener listener = new ButtonListener();
@@ -41,6 +43,8 @@ public class MineSweeperPanel extends JPanel {
 		displayBoard();
 
 		bottom.setLayout(new GridLayout(3, 2));
+		bottom.add(quitButton);
+
 
 		// add all to contentPane
 		add(new JLabel("!!!!  Mine Sweeper  !!!!"), BorderLayout.NORTH);
@@ -53,9 +57,6 @@ public class MineSweeperPanel extends JPanel {
 		lossesLabel = new JLabel("0");
 		add(winsLabel, BorderLayout.EAST);
 		add(lossesLabel, BorderLayout.WEST);
-
-		quitButton = new JButton("QUIT");
-		bottom.add(quitButton);
 	}
 
 	private void displayBoard() {
@@ -66,18 +67,19 @@ public class MineSweeperPanel extends JPanel {
 
 				board[r][c].setText("");
 
-				// readable, ifs are verbose
+				// readable, ifs are verbose (?)
 					
 				if (iCell.isMine())
 					board[r][c].setText("!");
+				
+				if (!iCell.isMine() && !iCell.isExposed())
+                  		        board[r][c].setText("");
 
 				if (iCell.isExposed())
 					board[r][c].setEnabled(false);
+					board[r][c].setText("" + iCell.getMineCount());
 				else
 					board[r][c].setEnabled(true);
-
-				//if (iCell.isExposed())
-					//board[r][c].setText("" + getMineCount());
 			}
 	}
 
@@ -86,6 +88,10 @@ public class MineSweeperPanel extends JPanel {
 
 		public void actionPerformed(ActionEvent e) {
 
+			if (e.getSource() == quitButton) {
+              			System.exit(0);
+         		}
+			
 			for (int r = 0; r < boardSize; r++)
 				for (int c = 0; c < boardSize; c++)
 					if (board[r][c] == e.getSource())
@@ -101,17 +107,19 @@ public class MineSweeperPanel extends JPanel {
 
 			if (game.getGameStatus() == GameStatus.Lost) {
 				displayBoard();
-				JOptionPane.showMessageDialog(null, "You Lose \n The game will reset");
+				JOptionPane.showMessageDialog(null, "You Lose \n" +
+                       			"The game will reset");
 				//exposeMines = false;
 				game.reset();
 				losses++;
-				lossesLabel.setText(Integer.toString(losses));
+				lossesLabel.setText("Losses: " + Integer.toString(losses));
 				displayBoard();
 
 			}
 
 			if (game.getGameStatus() == GameStatus.WON) {
-				JOptionPane.showMessageDialog(null, "You Win: all mines have been found!\n The game will reset");
+				JOptionPane.showMessageDialog(null, "You Win: all " +
+                      			"mines have been found!\n The game will reset");
 				game.reset();
 				wins++;
 				winsLabel.setText(Integer.toString(wins));
