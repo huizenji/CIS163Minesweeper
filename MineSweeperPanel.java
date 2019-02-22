@@ -18,123 +18,134 @@ public class MineSweeperPanel extends JPanel {
 
 	public MineSweeperPanel() {
 
-		JPanel bottom = new JPanel();
-		JPanel center = new JPanel();
-		JButton quitButton = new JButton("QUIT");
-     	        quitButton.addActionListener(new ButtonListener());
 
-		// create game, listeners
-		ButtonListener listener = new ButtonListener();
+        JPanel bottom = new JPanel();
+        JPanel top = new JPanel();
 
-		game = new MineSweeperGame();
+        quitButton.addActionListener(new ButtonListener());
+        recursiveButton.addActionListener(new ButtonListener());
 
-		// create the board
-		boardSize = game.getBoardSize();
-		center.setLayout(new GridLayout(boardSize, boardSize));
-		board = new JButton[boardSize][boardSize];
+        // create game, listeners
+        ButtonListener listener = new ButtonListener();
 
-		for (int row = 0; row < boardSize; row++)
-			for (int col = 0; col < boardSize; col++) {
-				board[row][col] = new JButton("");
-				board[row][col].addActionListener(listener);
-				center.add(board[row][col]);
-			}
+        game = new MineSweeperGame();
 
-		displayBoard();
+        // create the board
+        boardSize = game.getBoardSize();
+        top.setLayout(new GridLayout(boardSize, boardSize));
+        board = new JButton[boardSize][boardSize];
+       // ImageIcon emptyIcon = new ImageIcon("icon.png");
 
-		bottom.setLayout(new GridLayout(3, 2));
-		bottom.add(quitButton);
+        for (int row = 0; row < boardSize; row++)
+            for (int col = 0; col < boardSize; col++) {
+                board[row][col] = new JButton("");
+                board[row][col].addActionListener(listener);
+                top.add(board[row][col]);
+            }
 
+        displayBoard();
 
-		// add all to contentPane
-		add(new JLabel("!!!!  Mine Sweeper  !!!!"), BorderLayout.NORTH);
-		add(center, BorderLayout.CENTER);
-		add(bottom, BorderLayout.SOUTH);
+        recursionLabel = new JLabel("Recursive Zero Fill");
 
-		wins = 0;
-		losses = 0;
-		winsLabel = new JLabel("0");
-		lossesLabel = new JLabel("0");
-		add(winsLabel, BorderLayout.EAST);
-		add(lossesLabel, BorderLayout.WEST);
-	}
+        bottom.setLayout(new GridLayout(3, 2));
+        bottom.add(quitButton);
+        bottom.add(recursiveButton);
 
-	private void displayBoard() {
+        wins = 0;
+        losses = 0;
+        winsLabel = new JLabel("Wins: 0");
+        lossesLabel = new JLabel("Losses: 0");
+        bottom.add(winsLabel);
+        bottom.add(lossesLabel);
 
-		for (int r = 0; r < boardSize; r++)
-			for (int c = 0; c < boardSize; c++) {
-				iCell = game.getCell(r, c);
+        bottom.add(recursionLabel);
 
-				board[r][c].setText("");
-
-				// readable, ifs are verbose (?)
-					
-				if (iCell.isMine())
-					board[r][c].setText("!");
-				
-				if (!iCell.isMine() && !iCell.isExposed())
-                  		        board[r][c].setText("");
-
-				if (iCell.isExposed())
-					board[r][c].setEnabled(false);
-					board[r][c].setText("" + iCell.getMineCount());
-				else
-					board[r][c].setEnabled(true);
-			}
-	}
+        // add all to contentPane
+        add(new JLabel("!!!!  Mine Sweeper  !!!!"), BorderLayout.NORTH);
+        add(top, BorderLayout.NORTH);
+        add(bottom, BorderLayout.SOUTH);
 
 
-	private class ButtonListener implements ActionListener {
 
-		public void actionPerformed(ActionEvent e) {
-
-       		        if (e.getSource() == quitButton) {
-       		            int confirm = JOptionPane.showConfirmDialog(null,
-         	     	            "Quit Game?","QUIT",JOptionPane.YES_NO_OPTION);
-         	     	    if(confirm == JOptionPane.YES_OPTION) {
-                   		     System.exit(0);
-               	      	    }
-         	 	 }
-			
-			for (int r = 0; r < boardSize; r++)
-				for (int c = 0; c < boardSize; c++)
-					if (board[r][c] == e.getSource())
-						game.select(r, c);
-
-//			for (int r = 0; r < 10; r++)     // are only mines left
-//				for (int c = 0; c < 5; c++)
-//					if (!board[r][c].isExposed() && !board[r][c].isMine())
-//						status = GameStatus.NotOverYet;
+    }
 
 
-			displayBoard();
+    private void displayBoard() {
 
-			if (game.getGameStatus() == GameStatus.Lost) {
-				displayBoard();
-				JOptionPane.showMessageDialog(null, "You Lose \n" +
-                       			"The game will reset");
-				//exposeMines = false;
-				game.reset();
-				losses++;
-				lossesLabel.setText("Losses: " + Integer.toString(losses));
-				displayBoard();
+        for (int r = 0; r < boardSize; r++)
+            for (int c = 0; c < boardSize; c++) {
+                iCell = game.getCell(r, c);
 
-			}
+                if (iCell.isExposed()) {
+                    board[r][c].setEnabled(false);
+                    board[r][c].setText("" + iCell.getMineCount());
+                }
+                else
+                    board[r][c].setEnabled(true);
 
-			if (game.getGameStatus() == GameStatus.WON) {
-				JOptionPane.showMessageDialog(null, "You Win: all " +
-                      			"mines have been found!\n The game will reset");
-				game.reset();
-				wins++;
-				winsLabel.setText(Integer.toString(wins));
-				displayBoard();
-			}
 
-		}
+                // readable, ifs are verbose (?)
 
-	}
+                if (iCell.isMine())
+                    board[r][c].setText("!");
+                if (!iCell.isMine() && !iCell.isExposed())
+                    board[r][c].setText("");
+
+
+
+            }
+    }
+
+
+    private class ButtonListener implements ActionListener {
+
+        public void actionPerformed(ActionEvent e) {
+
+            if (e.getSource() == quitButton) {
+                int confirm = JOptionPane.showConfirmDialog(null,
+                        "Quit Game?","QUIT",JOptionPane.YES_NO_OPTION);
+                if(confirm == JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                }
+            }
+            for (int r = 0; r < boardSize; r++)
+                for (int c = 0; c < boardSize; c++)
+                    if (board[r][c] == e.getSource())
+                        game.select(r, c);
+
+            displayBoard();
+
+            if (game.getGameStatus() == GameStatus.Lost) {
+                displayBoard();
+                JOptionPane.showMessageDialog(null, "You Lose \n" +
+                        "The game will reset");
+
+                //exposeMines = false;
+                game.reset();
+                losses++;
+                lossesLabel.setText("Losses: " + Integer.toString(losses));
+                displayBoard();
+
+            }
+
+            if (game.getGameStatus() == GameStatus.WON) {
+                JOptionPane.showMessageDialog(null, "You Win: all " +
+                        "mines have been found!\n The game will reset");
+                game.reset();
+                wins++;
+                winsLabel.setText("Wins: " + Integer.toString(wins));
+                displayBoard();
+            }
+
+
+
+
+        }
+
+    }
 
 }
+
 
 
 
