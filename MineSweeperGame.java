@@ -34,7 +34,8 @@ public class MineSweeperGame {
         if (board[row][col].isMine())   // did I lose
             status = GameStatus.Lost;
         if (board[row][col].getMineCount() == 0)
-            revealEmptyCellsRecursive(row, col);
+           // revealEmptyCellsRecursive(row, col);
+            revealEmptyCellsNonRecursive(row, col);
         if (everyNonMineCellExposed()) { // every cell exposed?
             status = GameStatus.WON;    // did I win
         }
@@ -125,9 +126,56 @@ public class MineSweeperGame {
                 }
             }
         }
+    
+    private boolean nonRecIsDone(int row, int col) {
+        for (int r = 0; r < boardSize; r++) {
+            for (int c = 0; c < boardSize; c++) {
+                if (board[r][c].isExposedNonRec()) {
+                    for (int scannedRow = row - 1; scannedRow <= row + 1;
+                         scannedRow++) {
+                        for (int scannedCol = col - 1; scannedCol <=
+                                col + 1; scannedCol++) {
+                            if ((scannedRow >= 0 && scannedRow < board.length)
+                                    && (scannedCol >= 0 && scannedCol < board[row].length)) {
+                                if (!board[scannedRow][scannedCol].isExposedNonRec())
+                                    return false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
         
     public void revealEmptyCellsNonRecursive(int row, int col) {
-
+        board[row][col].setExposedNonRec(true); //marked
+        for (int r = 0; r < boardSize; r++) {
+            for (int c = 0; c < boardSize; c++) { //scan whole board
+                if (board[r][c].isExposedNonRec()) { //only continue if cell is marked
+                    for (int scannedRow = row - 1; scannedRow <= row + 1; //from here
+                         scannedRow++) {
+                        for (int scannedCol = col - 1; scannedCol <=
+                                col + 1; scannedCol++) {
+                            if ((scannedRow >= 0 && scannedRow < board.length)
+                                    && (scannedCol >= 0 && scannedCol < board[row].length)) { //to here will scan eight surround
+                                board[scannedRow][scannedCol].setExposed(true); // expose it :)
+                                if (board[scannedRow][scannedCol].getMineCount() == 0) { //oh? You need to be marked?
+                                    //maybe another if to make sure it hasn't already been marked?
+                                    board[scannedRow][scannedCol].setExposedNonRec(true); //marked
+                                    if (!nonRecIsDone(scannedRow, scannedCol)) { //unmarked cell within the radius of another marked?
+                                        r = 0;   //reset board scan to go again
+                                        c = 0;      // if nonRecIsDone == false, then board scan will continue as normal until loop completes
+                                        System.out.println("notDone"); //test
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        System.out.println("Done"); //test
     }
 
     public void revealEmptyCellsRecursive(int row, int col) {
