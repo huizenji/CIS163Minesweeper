@@ -3,8 +3,7 @@ package project2;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 public class MineSweeperPanel extends JPanel {
 
@@ -185,5 +184,8 @@ public class MineSweeperPanel extends JPanel {
         }
 
     }
+
+
+
 
 
