@@ -15,7 +15,6 @@ public class MineSweeperGame {
         board = new Cell[boardSize][boardSize];
         setEmpty();
         layMines(mineCount);
-        countMineNeighborsOfAllCells();
     }
 
     private void setEmpty() {
@@ -29,15 +28,35 @@ public class MineSweeperGame {
     }
 
     public void select(int row, int col) {
+        if (MineSweeperPanel.actionCounter == 0) {
+            moveMine(row, col);
+            countMineNeighborsOfAllCells();
+        }
+
         board[row][col].setExposed(true);
 
         if (board[row][col].isMine())   // did I lose
             status = GameStatus.Lost;
         if (board[row][col].getMineCount() == 0)
-           // revealEmptyCellsRecursive(row, col);
-            revealEmptyCellsNonRecursive(row, col);
+            revealEmptyCellsRecursive(row, col);
+        //revealEmptyCellsNonRecursive(row, col);
         if (everyNonMineCellExposed()) { // every cell exposed?
             status = GameStatus.WON;    // did I win
+        }
+    }
+
+    public void moveMine(int row, int col) {
+        if (board[row][col].isMine()) {
+            board[row][col].setMine(false);
+            for (int r = 0; r < board.length; r++) {
+                for (int c = 0; c < board.length; c++) {
+                    if (!board[r][c].isMine()) {
+                        board[r][c].setMine(true);
+                        break;
+                    }
+                }
+                break;
+            }
         }
     }
 
@@ -49,7 +68,7 @@ public class MineSweeperGame {
         status = GameStatus.NotOverYet;
         setEmpty();
         layMines(mineCount);
-        countMineNeighborsOfAllCells();
+        MineSweeperPanel.actionCounter = 0;
     }
 
     private void layMines(int mineCount) {
@@ -76,7 +95,7 @@ public class MineSweeperGame {
      * @return the count of mines directly surrounding the indicated
      *          cell
      *****************************************************************/
-    public int neighborCount(int row, int col) {
+    private int neighborCount(int row, int col) {
         int count = 0;
         for (int scannedRow = row - 1; scannedRow <= row + 1;
              scannedRow++) {
@@ -92,7 +111,7 @@ public class MineSweeperGame {
         return count;
     }
 
-    public void countMineNeighborsOfAllCells() {
+    private void countMineNeighborsOfAllCells() {
         for (int r = 0; r < boardSize; r++) {
             for (int c = 0; c < boardSize; c++) {
                 if (!board[r][c].isMine())
@@ -112,7 +131,7 @@ public class MineSweeperGame {
         return true;
     }
 
-   private void exposeEightSurroundingCells(int row, int col) {
+    private void exposeEightSurroundingCells(int row, int col) {
         if (board[row][col].getMineCount() == 0) {
             for (int scannedRow = row - 1; scannedRow <= row + 1;
                  scannedRow++) {
@@ -127,7 +146,7 @@ public class MineSweeperGame {
             }
         }
     }
-    
+
     private boolean nonRecIsDone(int row, int col) {
         for (int r = 0; r < boardSize; r++) {
             for (int c = 0; c < boardSize; c++) {
@@ -138,8 +157,10 @@ public class MineSweeperGame {
                                 col + 1; scannedCol++) {
                             if ((scannedRow >= 0 && scannedRow < board.length)
                                     && (scannedCol >= 0 && scannedCol < board[row].length)) {
-                                if (!board[scannedRow][scannedCol].isExposedNonRec())
-                                    return false;
+                                if (board[scannedRow][scannedCol].getMineCount() == 0) {
+                                    if (!board[scannedRow][scannedCol].isExposedNonRec())
+                                        return false;
+                                }
                             }
                         }
                     }
@@ -148,7 +169,7 @@ public class MineSweeperGame {
         }
         return true;
     }
-        
+   
     public void revealEmptyCellsNonRecursive(int row, int col) {
         board[row][col].setExposedNonRec(true); //marked
         for (int r = 0; r < boardSize; r++) {
