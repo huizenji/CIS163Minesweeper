@@ -48,6 +48,7 @@ public class MineSweeperGame {
         status = GameStatus.NotOverYet;
         setEmpty();
         layMines(mineCount);
+        countMineNeighborsOfAllCells();
     }
 
     private void layMines(int mineCount) {
