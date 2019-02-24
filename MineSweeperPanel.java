@@ -1,15 +1,12 @@
 package project2;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
 public class MineSweeperPanel extends JPanel {
-
     private JButton[][] board;
     private JButton quitButton = new JButton("QUIT");
-    ;
     private JButton recursiveButton = new JButton("Toggle Recursion");
     private Cell iCell;
     private int boardSize, wins, losses;
@@ -17,9 +14,7 @@ public class MineSweeperPanel extends JPanel {
 
     private MineSweeperGame game;  // model
 
-    public MineSweeperPanel() {
-
-
+    public MineSweeperPanel(int boardSize, int mineCount) {
         JPanel bottom = new JPanel();
         JPanel top = new JPanel();
 
@@ -31,10 +26,10 @@ public class MineSweeperPanel extends JPanel {
         // create game, listeners
         mouse listener = new mouse();
 
-        game = new MineSweeperGame();
+        game = new MineSweeperGame(boardSize, mineCount);
 
         // create the board
-        boardSize = game.getBoardSize();
+        this.boardSize = boardSize;
         top.setLayout(new GridLayout(boardSize, boardSize));
         board = new JButton[boardSize][boardSize];
         // ImageIcon emptyIcon = new ImageIcon("icon.png");
@@ -184,6 +179,7 @@ public class MineSweeperPanel extends JPanel {
         }
 
     }
+
 
 
 
