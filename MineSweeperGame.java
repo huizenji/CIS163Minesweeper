@@ -112,20 +112,21 @@ public class MineSweeperGame {
         return true;
     }
 
-    public void exposeEightSurroundingCells(int row, int col) {
-            if (board[row][col].getMineCount() == 0) {
-                for (int scannedRow = row - 1; scannedRow <= row + 1;
-                     scannedRow++) {
-                    for (int scannedCol = col - 1; scannedCol <=
-                            col + 1; scannedCol++) {
-                        if ((scannedRow >= 0 && scannedRow < board.length)
-                                && (scannedCol >= 0 && scannedCol < board[row].length)) {
+   private void exposeEightSurroundingCells(int row, int col) {
+        if (board[row][col].getMineCount() == 0) {
+            for (int scannedRow = row - 1; scannedRow <= row + 1;
+                 scannedRow++) {
+                for (int scannedCol = col - 1; scannedCol <=
+                        col + 1; scannedCol++) {
+                    if ((scannedRow >= 0 && scannedRow < board.length)
+                            && (scannedCol >= 0 && scannedCol < board[row].length)) {
+                        if (!board[scannedRow][scannedCol].isFlagged())
                             board[scannedRow][scannedCol].setExposed(true);
-                        }
                     }
                 }
             }
         }
+    }
     
     private boolean nonRecIsDone(int row, int col) {
         for (int r = 0; r < boardSize; r++) {
@@ -178,22 +179,24 @@ public class MineSweeperGame {
         System.out.println("Done"); //test
     }
 
-    public void revealEmptyCellsRecursive(int row, int col) {
-        exposeEightSurroundingCells(row, col);
-        board[row][col].setExposedRec(true);
-        for (int scannedRow = row - 1; scannedRow <= row + 1;
-             scannedRow++) {
-            for (int scannedCol = col - 1; scannedCol <=
-                    col + 1; scannedCol++) {
-                if ((scannedRow >= 0 && scannedRow < board.length)
-                        && (scannedCol >= 0 && scannedCol < board[row].length)) {
-                    if (board[scannedRow][scannedCol].getMineCount() == 0) {
-                        if (!board[scannedRow][scannedCol].isExposedRec())
-                            revealEmptyCellsRecursive(scannedRow, scannedCol);
+     private void revealEmptyCellsRecursive(int row, int col) {
+        if (!board[row][col].isFlagged()) {
+            exposeEightSurroundingCells(row, col);
+            board[row][col].setExposedRec(true);
+            for (int scannedRow = row - 1; scannedRow <= row + 1;
+                 scannedRow++) {
+                for (int scannedCol = col - 1; scannedCol <=
+                        col + 1; scannedCol++) {
+                    if ((scannedRow >= 0 && scannedRow < board.length)
+                            && (scannedCol >= 0 && scannedCol < board[row].length)) {
+                        if (board[scannedRow][scannedCol].getMineCount() == 0) {
+                            if (!board[scannedRow][scannedCol].isExposedRec())
+                                revealEmptyCellsRecursive(scannedRow, scannedCol);
+                        }
                     }
                 }
             }
         }
     }
-
+    
 }
