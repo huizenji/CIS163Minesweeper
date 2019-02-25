@@ -11,7 +11,7 @@ public class MineSweeperPanel extends JPanel {
     private Cell iCell;
     private int boardSize, wins, losses;
     private JLabel winsLabel, lossesLabel, recursionLabel;
-    public static in actionCounter = 0;
+    public static int actionCounter = 0;
 
     private MineSweeperGame game;  // model
 
