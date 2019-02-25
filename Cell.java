@@ -5,10 +5,15 @@ public class Cell {
     private int mineCount;
     private boolean isFlagged;
     private boolean isExposed;
+    private boolean isExposedRec;
+    private boolean isMarked;
     private boolean isMine;
 
-    public Cell(boolean exposed, boolean mine, boolean flagged) {
+    public Cell(boolean exposed, boolean exposedRec, boolean marked,
+                boolean mine, boolean flagged) {
         isExposed = exposed;
+        isExposedRec = exposedRec;
+        isMarked = marked;
         isMine = mine;
         isFlagged = flagged;
     }
@@ -20,7 +25,7 @@ public class Cell {
     public void setMineCount(int mineCount) {
         this.mineCount = mineCount;
     }
-    
+
     public boolean isFlagged() {
         return isFlagged;
     }
@@ -37,6 +42,22 @@ public class Cell {
         isExposed = exposed;
     }
 
+    public boolean isExposedRec() {
+        return isExposedRec;
+    }
+
+    public void setExposedRec(boolean exposedRec) {
+        isExposedRec = exposedRec;
+    }
+
+    public boolean isMarked() {
+        return isMarked;
+    }
+
+    public void setMarked(boolean marked) {
+        isMarked = marked;
+    }
+
     public boolean isMine() {
         return isMine;
     }
@@ -44,4 +65,7 @@ public class Cell {
     public void setMine(boolean mine) {
         isMine = mine;
     }
+
+
 }
+
