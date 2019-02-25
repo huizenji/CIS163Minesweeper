@@ -124,8 +124,10 @@ public class MineSweeperPanel extends JPanel {
                                 }
                             }
                             if (e.getButton() == MouseEvent.BUTTON1) {
-                                if (!game.getCell(r, c).isFlagged())
+                                if (!game.getCell(r, c).isFlagged()){
                                 game.select(r, c);
+                                actionCounter++;
+                                }
                             }
                         }
                 displayBoard();
@@ -163,8 +165,6 @@ public class MineSweeperPanel extends JPanel {
                     winsLabel.setText("Wins: " + Integer.toString(wins));
                     displayBoard();
                 }
-
-                actionCounter++;
 
             }
 
