@@ -107,4 +107,6 @@ public class MineSweeperGUI {
         frame.setSize((40 * boardSize) + 50, (40 * boardSize) + 50);
         frame.setVisible(true);
     }
+    
+    
 }
