@@ -81,6 +81,12 @@ public class MineSweeperPanel extends JPanel {
                     board[r][c].setText("" + iCell.getMineCount());
                 } else
                     board[r][c].setEnabled(true);
+                
+                 if (game.getGameStatus() == GameStatus.WON) {
+                    if (iCell.isMine()) {
+                        iCell.setFlagged(true);
+                    }
+                }
 
 
                 if(iCell.isFlagged()) {
