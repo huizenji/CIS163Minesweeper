@@ -11,45 +11,37 @@ import java.awt.event.*;
  * number of wins and losses, and a label that shows the number of
  * mines left.
  *
- * Jillian Huizenga and Lauren Freeman
+ * @author Jillian Huizenga and Lauren Freeman
  * CIS 163-01 Professor Ferguson
  * 26 February 2019
  *********************************************************************/
-
 public class MineSweeperPanel extends JPanel {
 
-    //array of buttons that make up the game board
+    /** array of buttons that make up the game board **/
     private JButton[][] board;
 
-    //button that allows the player to quit the game
+    /** button that allows the player to quit the game **/
     private JButton quitButton = new JButton("QUIT");
 
-    /*
-     * button that allows the player to toggle whether zero fill is
-     * handled recursively or non-recursively
-     */
+    /** button that toggles how zero fill is conducted **/
     private JButton recursiveButton 
             = new JButton("Toggle Recursion");
 
-    //declares a cell object
+    /** declares a cell object **/
     private Cell iCell;
 
-    /*
-     * size of the board, the number of mines in play, the number of
-     * mines left to flag, the amount of wins, and the amount of losses
-     */
+    /** size of the board, the number of mines in play, the number of
+        mines left to flag, the amount of wins, and the amount of losses **/
     private int boardSize, mineCount, mineCountDisplay, wins, losses;
 
-    /*
-     *labels for the amount of wins, losses, mines, and whether the
-     * zero fill is being handled recursively or non recursively
-     */
+    /** labels for the amount of wins, losses, mines, and whether the
+        zero fill is being handled recursively or non recursively **/
     private JLabel winsLabel, lossesLabel, recursionLabel, mineLabel;
 
-    //counts the amount of moves that have taken place
+    /** counts the amount of moves that have taken place **/
     public static int actionCounter = 0;
 
-    //declares a new game
+    /** declares a new object of MineSweeperGame **/
     private MineSweeperGame game;
 
     /******************************************************************
@@ -112,7 +104,7 @@ public class MineSweeperPanel extends JPanel {
         bottom.add(winsLabel);
         bottom.add(lossesLabel);
 
-        //adds recursion label and mine label to bottomm panel
+        //adds recursion label and mine label to bottom panel
         bottom.add(recursionLabel);
         bottom.add(mineLabel);
 
@@ -227,7 +219,6 @@ public class MineSweeperPanel extends JPanel {
             //display the game board
             displayBoard();
 
-
             //if quit button was pressed, quit game after confirmation
             if (e.getSource() == quitButton) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
@@ -244,7 +235,6 @@ public class MineSweeperPanel extends JPanel {
              *if recursive button pressed, change whether the game
              * handles zero fill recursively or non recursively
              */
-            
             if (e.getSource() == recursiveButton){
                 if (recursionLabel.getText().equals("Recursive Zero Fill")) {
                     recursionLabel.setText("Non-Recursive Zero Fill");
@@ -306,10 +296,9 @@ public class MineSweeperPanel extends JPanel {
         public void mouseExited(MouseEvent e) {
         }
 
-
-
     }
 
+    
 }
 
 
