@@ -3,7 +3,7 @@ package project2;
 import javax.swing.*;
 
 /**********************************************************************
- * A class that sets up the MineSweeper Graphical User Interface
+ * A class that creates the MineSweeper Graphical User Interface
  *
  * Jillian Huizenga and Lauren Freeman
  * CIS 163-01 Professor Ferguson
