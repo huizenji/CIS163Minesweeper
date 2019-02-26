@@ -4,7 +4,7 @@ package project2;
  * A class that sets and stores the four statuses of a single Cell
  * as well as the number of mines surrounding it.
  *
- * Jillian Huizenga and Lauren Freeman
+ * @author Jillian Huizenga and Lauren Freeman
  * CIS 163-01 Professor Ferguson
  * 26 February 2019
  *********************************************************************/
