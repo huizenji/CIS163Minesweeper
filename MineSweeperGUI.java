@@ -5,7 +5,7 @@ import javax.swing.*;
 /**********************************************************************
  * A class that creates the MineSweeper Graphical User Interface
  *
- * Jillian Huizenga and Lauren Freeman
+ * @author Jillian Huizenga and Lauren Freeman
  * CIS 163-01 Professor Ferguson
  * 26 February 2019
  *********************************************************************/
