@@ -6,8 +6,9 @@ import java.util.*;
  * A class that stores all of the methods, rules, and functions of the
  * MineSweeper game
  *
- * Jillian Huizenga and Lauren Freeman
- * 25 February 2019
+ * @author Jillian Huizenga and Lauren Freeman
+ * CIS 163-01 Professor Ferguson
+ * 26 February 2019
  *********************************************************************/
 public class MineSweeperGame {
 
