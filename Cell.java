@@ -1,6 +1,5 @@
 package project2;
 
-
 /**********************************************************************
  * A class that sets and stores the four statuses of a single Cell
  * as well as the number of mines surrounding it.
@@ -9,25 +8,24 @@ package project2;
  * CIS 163-01 Professor Ferguson
  * 26 February 2019
  *********************************************************************/
-
 public class Cell {
     
-    //the number of mines surrounding the cell
+    /** the number of mines surrounding the cell **/
     private int mineCount;
     
-    //whether the cell is flagged as possibly containing a mine
+    /** whether the cell is flagged as possibly containing a mine **/
     private boolean isFlagged;
     
-    //whether the cell has been exposed (clicked on or otherwise)
+    /** whether the cell has been exposed (clicked on or otherwise) **/
     private boolean isExposed;
     
-    //whether the cell has been exposed (for the recursion method)
+    /** whether the cell has been exposed (for the recursion method) **/
     private boolean isExposedRec;
     
-    //whether the cell has been marked (for the non-recursion method)
+    /** whether the cell has been marked (for the non-recursion method) **/
     private boolean isMarked;
     
-    //whether the cell contains a mine
+    /** whether the cell contains a mine **/
     private boolean isMine;
 
     /**********************************************************************
@@ -155,4 +153,5 @@ public class Cell {
         isMine = mine;
     }
 
+    
 }
