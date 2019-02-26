@@ -9,8 +9,8 @@ public class MineSweeperPanel extends JPanel {
     private JButton quitButton = new JButton("QUIT");
     private JButton recursiveButton = new JButton("Toggle Recursion");
     private Cell iCell;
-    private int boardSize, wins, losses;
-    private JLabel winsLabel, lossesLabel, recursionLabel;
+    private int boardSize, mineCount, wins, losses;
+    private JLabel winsLabel, lossesLabel, recursionLabel, mineLabel;
     public static int actionCounter = 0;
     
     private MineSweeperGame game;  // model
@@ -44,6 +44,7 @@ public class MineSweeperPanel extends JPanel {
         displayBoard();
 
         recursionLabel = new JLabel("Recursive Zero Fill");
+        mineLabel = new JLabel("Mines Left: " + mineCount);
 
         bottom.setLayout(new GridLayout(3, 2));
         bottom.add(quitButton);
@@ -57,6 +58,7 @@ public class MineSweeperPanel extends JPanel {
         bottom.add(lossesLabel);
 
         bottom.add(recursionLabel);
+        bottom.add(mineLabel);
 
         // add all to contentPane
         add(new JLabel("!!!!  Mine Sweeper  !!!!"), BorderLayout.NORTH);
@@ -91,6 +93,7 @@ public class MineSweeperPanel extends JPanel {
 
                 if(iCell.isFlagged()) {
                     board[r][c].setText("?");
+                    mineLabel.setText("Mines Left: " + mineCount);
                 }
                 else if (iCell.isMine()) {
                     board[r][c].setText("!");
@@ -127,10 +130,12 @@ public class MineSweeperPanel extends JPanel {
                     if (board[r][c] == e.getSource()) {
                         if (e.getButton() == MouseEvent.BUTTON3) {
                             if (game.getCell(r, c).isFlagged()) {
-                                game.getCell(r, c).setFlagged(false);
-                            } else {
-                                game.getCell(r, c).setFlagged(true);
-                            }
+								game.getCell(r, c).setFlagged(false);
+								mineCount++;
+							} else {
+								game.getCell(r, c).setFlagged(true);
+								mineCount--;
+							}
                         }
                         if (e.getButton() == MouseEvent.BUTTON1) {
                             if (!game.getCell(r, c).isFlagged()){
@@ -151,7 +156,16 @@ public class MineSweeperPanel extends JPanel {
                     }
                 }
             }
-
+            
+            if (e.getSource() == recursiveButton){
+				if (recursionLabel.getText().equals("Recursive Zero Fill")) {
+					recursionLabel.setText("Non-Recursive Zero Fill");
+					game.setUseRecursion(false);
+				}else if (recursionLabel.getText().equals("Non-Recursive Zero Fill")) {
+					recursionLabel.setText("Recursive Zero Fill");
+					game.setUseRecursion(true);
+				}
+			}
 
             if (game.getGameStatus() == GameStatus.Lost) {
                 displayBoard();
