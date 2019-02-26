@@ -107,7 +107,8 @@ public class MineSweeperGame {
             status = GameStatus.Lost;
 
         // reveal cells using recursion or non-recursion
-        if (board[row][col].getMineCount() == 0 && !board[row][col].isMine()) {
+        if (board[row][col].getMineCount() == 0 && !board[row][col]
+                .isMine()) {
             if (useRecursion())
                 revealEmptyCellsRecursive(row, col);
             else
